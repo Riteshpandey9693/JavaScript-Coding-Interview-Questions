@@ -1,32 +1,80 @@
 /*
 Question:
-Return all vowels from a string in the order they appear.
+Count how many times each character appears in a string.
 
-Vowels: a, e, i, o, u (case-insensitive)
+Rules:
+- Case-sensitive (unless specified otherwise)
+- Count every character in the string
+- Return result as an object
 
 Examples:
-"I am a frontend developer" → "iaaonteeeoe"
-"Hello World"             → "eoo"
-"xyz"                     → ""
+"aabbcc"     → { a:2, b:2, c:2 }
+"javascript" → { j:1, a:2, v:1, s:1, c:1, r:1, i:1, p:1, t:1 }
 */
+
 
 /*
-Approach 1: Direct character comparison
-- Convert string to lowercase
-- Traverse each character
-- Check manually if it's a vowel
-- Append it to result if yes
+Approach 1: Using Object (most common & readable)
+
+Understanding:
+- Traverse the string character by character
+- Use an object to store frequency
+- If character exists → increment
+- Else → initialize with 1
+
+Best for:
+- Clean logic
+- Quick implementation
 */
 
-function vowels1(str) {
-  str = str.toLowerCase();
-  let result = "";
+function countCharacters1(str) {
+  let freq = {};
 
   for (let i = 0; i < str.length; i++) {
     let ch = str[i];
-    if (ch === 'a' || ch === 'e' || ch === 'i' || ch === 'o' || ch === 'u') {
-      result += ch;
+
+    if (freq[ch]) {
+      freq[ch]++;
+    } else {
+      freq[ch] = 1;
     }
+  }
+
+  return freq;
+}
+
+/*
+Time Complexity: O(n)
+Space Complexity: O(k) → unique characters
+*/
+
+
+/*
+Approach 2: Using Map (more structured, interview-safe)
+
+Understanding:
+- Map allows explicit key–value handling
+- Useful when keys are not limited to strings
+- Logic is same as object approach
+
+Best for:
+- Clean interviews
+- Avoiding prototype issues
+*/
+
+function countCharacters2(str) {
+  let map = new Map();
+
+  for (let i = 0; i < str.length; i++) {
+    let ch = str[i];
+
+    map.set(ch, (map.get(ch) || 0) + 1);
+  }
+
+  // convert Map to plain object (for expected output format)
+  let result = {};
+  for (let [key, value] of map) {
+    result[key] = value;
   }
 
   return result;
@@ -34,43 +82,19 @@ function vowels1(str) {
 
 /*
 Time Complexity: O(n)
-Space Complexity: O(n)
-*/
-
-
-/*
-Approach 2: Using array and includes
-- Store vowels in an array
-- Traverse string and check if character exists in vowel array
-- Append if yes
-*/
-
-function vowels2(str) {
-  str = str.toLowerCase();
-  let result = "";
-  let vowels = ['a', 'e', 'i', 'o', 'u'];
-
-  for (let i = 0; i < str.length; i++) {
-    let ch = str[i];
-    if (vowels.includes(ch)) {
-      result += ch;
-    }
-  }
-
-  return result;
-}
-
-/*
-Time Complexity: O(n)
-Space Complexity: O(n)
+Space Complexity: O(k)
 */
 
 
 // Test cases
-console.log(vowels1("I am a frontend developer")); // "iaaonteeeoe"
-console.log(vowels1("Hello World"));               // "eoo"
-console.log(vowels1("xyz"));                       // ""
+let str1 = "aabbcc";
+let str2 = "javascript";
 
-console.log(vowels2("I am a frontend developer")); // "iaaonteeeoe"
-console.log(vowels2("Hello World"));               // "eoo"
-console.log(vowels2("xyz"));                       // ""
+console.log(countCharacters1(str1)); 
+// { a: 2, b: 2, c: 2 }
+
+console.log(countCharacters1(str2)); 
+// { j:1, a:2, v:1, s:1, c:1, r:1, i:1, p:1, t:1 }
+
+console.log(countCharacters2(str1)); 
+console.log(countCharacters2(str2));
