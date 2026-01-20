@@ -50,9 +50,6 @@ Understanding:
 - Capitalize after a space
 - Ignore extra spaces
 - Build the result string manually
-
-Best for:
-- Interviews restricting built-in methods
 */
 
 function toTitleCase2(str) {
