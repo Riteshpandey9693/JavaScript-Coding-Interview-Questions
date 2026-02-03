@@ -1,38 +1,68 @@
+/*
+Question:
+Sort an array without using the built-in sort() method.
 
-// 2️⃣7️⃣ Sort an array without using sort()
+Rules:
+- Do not use Array.prototype.sort()
+- Sort in ascending order
+- Works for numbers (positive, negative, zero)
+- Return the sorted array
 
-let arr1 = [4, 2, 1, 3];
-// expected output: [1, 2, 3, 4]
-
-let arr2 = [5, 3, 0];
-// expected output: [0, 3, 5]
-
+Examples:
+[4, 2, 1, 3] → [1, 2, 3, 4]
+[5, 3, 0]    → [0, 3, 5]
+*/
 
 
+/*
+Approach: Bubble Sort (Optimized)
+
+Understanding:
+- Repeatedly compare adjacent elements
+- Swap if elements are in the wrong order
+- After each pass, the largest element moves to the end
+- Use a flag to detect if array is already sorted
+*/
 
 function sortArrayWithoutSorting(arr) {
-    let n = arr.length;
+  let n = arr.length;
 
-    for (let i = 0; i < n - 1; i++) {
-        // flag to optimize (already sorted check)
-        let swapped = false;
+  for (let i = 0; i < n - 1; i++) {
+    // Optimization: check if any swap happens
+    let swapped = false;
 
-        for (let j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                // swap
-                let temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                swapped = true;
-            }
-        }
+    for (let j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        // Swap adjacent elements
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
 
-        // if no swap happened, array is already sorted
-        if (!swapped) break;
+        swapped = true;
+      }
     }
 
-    return arr;
+    // If no swaps occurred, array is already sorted
+    if (!swapped) break;
+  }
+
+  return arr;
 }
 
-console.log(sortArrayWithoutSorting(arr1));
-console.log(sortArrayWithoutSorting(arr2));
+/*
+Time Complexity:
+- Worst Case: O(n²)
+- Average Case: O(n²)
+- Best Case: O(n) (already sorted due to optimization)
+
+Space Complexity:
+- O(1) (in-place sorting)
+*/
+
+
+// Test cases
+let arr1 = [4, 2, 1, 3];
+let arr2 = [5, 3, 0];
+
+console.log(sortArrayWithoutSorting(arr1)); // [1, 2, 3, 4]
+console.log(sortArrayWithoutSorting(arr2)); // [0, 3, 5]
